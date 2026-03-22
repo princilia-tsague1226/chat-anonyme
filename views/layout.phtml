@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title><?= $title ?></title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script type="text/javascript" src="assets/js/script.js" defer></script>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo-area">
+                <a href="index.php?page=room">
+                    <span class="site-title">Tchat anonyme</span>
+                    <img src="assets/img/logo.jpg" alt="Logo" class="site-logo">
+                </a>
+            </div>
+    
+            <nav class="main-nav">
+                <a href="index.php?page=room" class="<?= (!isset($_GET['page']) || $_GET['page'] === 'room') ? 'active' : '' ?>">Chat</a>
+                <a href="index.php?page=about" class="<?= (isset($_GET['page']) && $_GET['page'] === 'about') ? 'active' : '' ?>">À propos</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <?php require $view; ?>
+    </main>
+    
+    <footer class="main-footer">
+        Projet réalisé en PHP/MySQL - 2026.
+    </footer>
+
+</body>
+</html>

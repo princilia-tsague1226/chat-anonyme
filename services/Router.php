@@ -2,8 +2,6 @@
 
 namespace Services;
 
-require "./configs/settings.php";
-
 class Router {
     
     private $controller;
@@ -17,13 +15,13 @@ class Router {
     
     public function getController()
     {
-        // récupérer le nom du controller 
+        
         $instance = "Controllers\\".$this -> controller;
         
         $controller = new $instance();
         $method = $this -> method;
         
-        // appeller la bonne méthode 
+        
         $controller -> $method();
     }
     

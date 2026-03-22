@@ -1,12 +1,14 @@
 <?php
 
 namespace Models;
-
+use Exception;
 class Message
 {
     private $id;
     private $content;
     private $created_at;
+    private $room_id;
+    private $is_pinned;
 
     // getters
 
@@ -24,7 +26,17 @@ class Message
     {
         return $this->created_at;
     }
-
+    
+    public function getRoomId()
+    {
+        return $this->room_id;
+    }
+    
+    public function getIsPinned()
+    {
+        return $this->is_pinned;
+    }
+    
     // SETTERS AVEC VALIDATION
 
     public function setId($id)
@@ -53,5 +65,23 @@ class Message
         }
 
         $this->created_at = $created_at;
+    }
+    
+    public function setRoomId($room_id)
+    {
+        if (!preg_match('/^[0-9]+$/', $room_id)) {
+            throw new Exception("ID du salon invalide");
+        }
+
+        $this->room_id = (int) $room_id;
+    }
+    
+    public function setIsPinned($is_pinned)
+    {
+        if ($is_pinned != 0 && $is_pinned != 1) {
+        throw new \Exception("La valeur de épinglage doit être 0 ou 1");
+    }
+
+    $this->is_pinned = (int) $is_pinned;
     }
 }

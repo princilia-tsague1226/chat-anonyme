@@ -3,65 +3,87 @@
 namespace Controllers;
 
 use Models\Room;
+use Models\Message;
+use Repositories\MessageRepository;
 use Repositories\RoomRepository;
 use Exception;
 
 class RoomController
 {
-    public function index()
+    public function room()
     {
-        $repository = new RoomRepository();
-        $room = $repository->findAll();
-
-        // var_dump($posts);
-        $title = "Liste des salons";
-        $view = "postroom/room.phtml";
-
-        require "views/layout.phtml";
-    }
-
-    public function show()
-    {
-        if (!isset($_GET['id'])) {
-            echo "Salon non trouvé";
-            return;
-        }
-
-        $repository = new RoomRepository();
-        $room = $repository->findById($_GET['id']);
-        // var_dump($room);
-        $title = $room->getTitle();
-        $view = "room/room.phtml";
-
-        require "views/layout.phtml";
-    }
-
-    public function addRoom()
-    {
+        $roomRepo = new RoomRepository();
+        $msgRepo = new MessageRepository();
         
-        // tester la soumission du bouton ajouter un salon
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $error = "";
+        $success = "";
+        $selectedRoom = null;
+        $messages = [];
+    
+        
+        if (isset($_GET['action']) && isset($_GET['msgId']) && isset($_GET['id'])) {
+            $msgId = (int)$_GET['msgId'];
+            $roomId = (int)$_GET['id'];
             
-            try {
-                $roomName = $_POST['title'];
-                $room = new Room();
-                $room->setTitle($roomName);
-                
-                $repository = new RoomRepository();
-                $test = $repository->saveRoom($room); // On passe l'objet $room
-                
-                if ($test) {
-                    $message = 'Salon enregistré !!';
+            if ($_GET['action'] === 'pin') {
+                $msgRepo->pinMessage($msgId, $roomId);
+            } elseif ($_GET['action'] === 'unpin') {
+                $msgRepo->unpinMessage($msgId);
+            }
+            
+            
+            header("Location: index.php?page=room&id=" . $roomId);
+            exit();
+        }
+        
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+           
+            if (isset($_POST['content']) && isset($_GET['id'])) {
+                try {
+                    $msg = new Message();
+                    $msg->setContent($_POST['content']);
+                    $msg->setRoomId($_GET['id']);
+                    $msgRepo->saveMessage($msg);
+                    
+                    header("Location: index.php?page=room&id=" . $_GET['id']);
+                    exit();
+                } catch (Exception $e) {
+                    $error = $e->getMessage();
                 }
-            } catch (Exception $e){
-                $message = "Erreur : ".$e -> getMessage();
+            }
+    
+            
+            if (isset($_POST['title'])) {
+                try {
+                    $roomName = trim($_POST['title']);
+                    if (!empty($roomName)) {
+                        $room = new Room();
+                        $room->setTitle($roomName);
+                        $roomRepo->saveRoom($room);
+                        $success = "Salon créé !";
+                        header("Location: index.php?page=room");
+                        exit();
+                    }
+                } catch (Exception $e) {
+                    $error = $e->getMessage();
+                }
             }
         }
+    
         
-        $title = "Ajouter un salon";
-
-        $view = "room/room.phtml";
-
+        $rooms = $roomRepo->findAll();
+    
+        if (isset($_GET['id'])) {
+            $selectedRoom = $roomRepo->findById($_GET['id']);
+            if ($selectedRoom) {
+                $messages = $msgRepo->findByRoom($_GET['id']);
+            }
+        }
+    
+        $title = "Chat Anonyme";
+        $view = "room/room.phtml"; 
         require "views/layout.phtml";
     }
 }

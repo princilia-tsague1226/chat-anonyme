@@ -1,6 +1,6 @@
 <?php
 
-// require "./configs/settings.php";
+require "./configs/setting.php";
 
 spl_autoload_register(function ($class) {
     $path = lcfirst(str_replace('\\', DIRECTORY_SEPARATOR, $class));
@@ -14,9 +14,9 @@ spl_autoload_register(function ($class) {
 use Controllers\RoomController;
 use Services\Router;
 
-$page = $_GET['action'] ?? 'room';
+$page = $_GET['page'] ?? 'room';
 
-var_dump(AVAILABLE_ROUTES);
+// var_dump(AVAILABLE_ROUTES);
 
 
 $router = new Router($page);
