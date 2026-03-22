@@ -1,34 +1,31 @@
-<section class="room-container">
+<div class="main-container">
+    <div class="sidebar">
+        <button id="toggle-room-form">+ Ajouter un salon</button>
 
-    <header class="room-header">
-        <h2><?= htmlspecialchars($title) ?></h2>
-        <?php if (isset($room) && is_object($room)): ?>
-            <span class="date-creation">Créé le : <?= $room->getCreatedAt() ?></span>
-        <?php endif; ?>
-    </header>
+        <div id="add-room-block" class="hidden-form">
+            <form action="index.php?page=room" method="POST">
+                <input type="text" id = "addRoom" name="title" required placeholder="Nom du salon">
+                <button type="submit" id="btn-save">Enregistrer</button>
+            </form>
+        </div>
 
-    <div class="chat-window">
-        <ul class="message-list">
-            <?php if (isset($rooms) && !empty($rooms)): ?>
-                <?php foreach ($rooms as $room): ?>
-                    <li class="message-item">
-                        <span class="message-date">[<?= $room->getCreatedAt() ?>]</span>
-                        <span class="message-content"><?= htmlspecialchars($room->getContent()) ?></span>
-                    </li>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p class="empty-chat">Aucun message dans ce salon. Soyez le premier à écrire !</p>
-            <?php endif; ?>
+        <ul class="room-list">
+            <?php foreach ($rooms as $room): ?>
+                <li>
+                    <a href="index.php?page=room&id=<?= $room->getId() ?>" 
+                       class="<?= (isset($_GET['id']) && $_GET['id'] == $room->getId()) ? 'selected-room' : '' ?>">
+                        <?= htmlspecialchars($room->getTitle()) ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
         </ul>
     </div>
 
-    <footer class="chat-footer">
-        <form action="index.php?action=addPost" method="POST" class="message-form">
-            <input type="hidden" name="room_id" value="<?= $_GET['id'] ?? '' ?>">
-            
-            <input type="text" name="content" placeholder="Message..." required>
-            <button type="submit">Envoyer</button>
-        </form>
-    </footer>
-
-</section>
+    <section class="chat-area">
+        <?php if ($selectedRoom): ?>
+            <?php include "views/chat/chat.phtml"; ?>
+        <?php else: ?>
+            <p class="welcome-msg">Veuillez sélectionner un salon pour discuter.</p>
+        <?php endif; ?>
+    </section>
+</div>

@@ -1,0 +1,41 @@
+<?php 
+$pinnedMsg = null;
+$normalMessages = [];
+foreach ($messages as $m) {
+    if ($m->getIsPinned()) { $pinnedMsg = $m; }
+    else { $normalMessages[] = $m; }
+}
+?>
+<div class="chat-wrapper">
+    <div class="messages-display">
+        <?php if ($pinnedMsg): ?>
+            <div class="message-item pinned">
+                <div class="msg-content">
+                    <small class="msg-date">[<?= (new DateTime($pinnedMsg->getCreatedAt()))->format('d/m/Y, H:i') ?>]</small>
+                    <span><?= htmlspecialchars($pinnedMsg->getContent()) ?></span>
+                </div>
+                <a href="index.php?page=room&id=<?= $_GET['id'] ?>&action=unpin&msgId=<?= $pinnedMsg->getId() ?>" class="action-btn btn-unpin">
+                    Désépingler
+                </a>
+            </div>
+        <?php endif; ?> <?php foreach ($normalMessages as $message): ?>
+            <div class="message-item">
+                <small class="msg-date">[<?= (new DateTime($message->getCreatedAt()))->format('d/m/Y, H:i') ?>]</small>
+                <span><?= htmlspecialchars($message->getContent()) ?></span>
+                
+                <?php if (!$pinnedMsg): ?>
+                    <a href="index.php?page=room&id=<?= $_GET['id'] ?>&action=pin&msgId=<?= $message->getId() ?>" class="action-btn link-pin">
+                        Épingler
+                    </a>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <div class="input-area">
+        <form action="index.php?page=room&id=<?= $_GET['id'] ?>" method="POST">
+            <span class="label-msg">Message</span>
+            <input type="text" name="content" required>
+            <button type="submit" class="btn-send">Envoyer</button>
+        </form>
+    </div>

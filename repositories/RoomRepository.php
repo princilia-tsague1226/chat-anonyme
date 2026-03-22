@@ -43,7 +43,7 @@ class RoomRepository
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$row) {
-            return null; // salon non trouvé
+            return null; 
         }
 
         $room = new Room();
@@ -52,6 +52,13 @@ class RoomRepository
         $room->setCreatedAt($row['created_at']);
 
         return $room;
+    }
+    
+    public function findByName(string $name){
+        $query = $this -> pdo -> prepare("SELECT * FROM room WHERE title = :title");
+        $query -> execute (['title' => $name]);
+        
+        return $query -> fetch();
     }
 
     public function saveRoom(Room $room){

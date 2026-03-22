@@ -1,0 +1,304 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- Header --- */
+.main-header {
+    background-color: #252525;
+    padding: 20px 40px;
+    border-bottom: 2px solid #111;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logo-area a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.site-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #1abc9c;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.site-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.main-nav a {
+    color: #bdc3c7;
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.main-nav a:hover, .main-nav a.active {
+    color: #ffffff;
+    border-bottom: 3px solid #1abc9c;
+    padding-bottom: 5px;
+}
+
+/* --- Layout --- */
+.main-container { 
+    display: flex; 
+    flex: 1;
+}
+
+.sidebar { 
+    width: 250px; 
+    background: #252525; 
+    padding: 20px; 
+    border-right: 1px solid #111; 
+}
+
+.chat-area { 
+    flex: 1; 
+    padding: 20px; 
+    display: flex; 
+    flex-direction: column; 
+    background-color: #1a1a1a;
+}
+
+/* --- Sidebar--- */
+.room-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+}
+
+.room-list li {
+    margin-bottom: 8px;
+}
+
+.room-list li a {
+    display: block;
+    padding: 12px 15px;
+    color: #bdc3c7;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.room-list li a:hover {
+    background-color: #34495e;
+    color: white;
+    padding-left: 20px;
+}
+
+.room-list li a.selected-room {
+    background-color: #1abc9c;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(26, 188, 156, 0.3);
+}
+
+/* --- Bouton --- */
+#toggle-room-form {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    color: #1abc9c;
+    border: 2px dashed #1abc9c;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#add-room-block {
+    display: none;
+    margin: 15px 0;
+    padding: 15px;
+}
+
+#btn-save { 
+    margin-top: 1rem;
+}
+
+/* --- Chat & Messages --- */
+.chat-wrapper { 
+    display: flex; 
+    flex-direction: column; 
+    height: 100%; 
+    
+}
+.messages-display { 
+    flex: 1; 
+    overflow-y: auto; 
+    padding-bottom: 20px; 
+    
+}
+
+.message-item { 
+    margin-bottom: 15px; 
+    color: #ecf0f1; 
+    
+}
+.message-item.pinned { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    background: #34495e; 
+    padding: 15px; 
+    border-radius: 4px; 
+    border-left: 5px solid #1abc9c;
+    margin-bottom: 25px;
+}
+
+.msg-date { 
+    color: #95a5a6; 
+    margin-right: 10px; 
+    font-size: 0.85em; 
+    
+}
+
+/* --- Épingler/Désépingler --- */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.link-pin { 
+    background-color: #1abc9c; 
+    color: white; 
+    margin-left: 15px;
+}
+.link-pin:hover,.btn-send:hover, #btn-save:hover{ 
+    background-color: #16a085; 
+}
+
+.btn-unpin { 
+    background-color: #3498db; 
+    color: white; 
+    
+}
+.btn-unpin:hover { 
+    background-color: #2980b9; 
+}
+
+/* ---saisie --- */
+.input-area { 
+    background: #252525; 
+    padding: 20px; 
+    border-top: 1px solid #34495e; 
+    border-radius: 8px; 
+}
+.input-area form { 
+    display: flex; 
+    gap: 15px;
+}
+.input-area input, #addRoom { 
+    flex: 1; 
+    padding: 12px; 
+    border-radius: 5px; 
+    border: none; 
+}
+.btn-send, #btn-save { 
+    padding: 10px 25px; 
+    background: #1abc9c; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    font-weight: bold; 
+    border-radius: 5px; 
+}
+
+/* --- Footer --- */
+.main-footer {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto;
+    background-color: #252525;
+    color: #95a5a6;
+    font-style: italic;
+    border-top: 1px solid #34495e;
+}
+
+.about-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #252525;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    line-height: 1.6;
+}
+
+.about-title {
+    color: #1abc9c;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #34495e;
+    padding-bottom: 10px;
+}
+
+.about-text {
+    color: #ecf0f1;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.about-subtitle {
+    color: #3498db;
+    margin-top: 30px;
+}
+
+.about-list {
+    list-style: none;
+    padding: 0;
+}
+
+.about-list li {
+    background-color: #1a1a1a;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #1abc9c;
+}
+
+.about-list li strong {
+    color: #ffffff;
+}
+
+.alert-error {
+    background-color: #e74c3c;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 5px solid #c0392b;
+    font-weight: bold;
+}
